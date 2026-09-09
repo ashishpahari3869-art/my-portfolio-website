@@ -1,0 +1,215 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-feature-settings:
+    "liga" 1,
+    "kern" 1;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #c9a24b;
+  color: #080f19;
+}
+
+/* visible keyboard focus, kept consistent with the gold accent */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #c9a24b;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* dark-panel scrollbar, so the navy sections don't get a bright gutter */
+@supports selector(::-webkit-scrollbar) {
+  ::-webkit-scrollbar {
+    width: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0c1728;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e3a5c;
+    border-radius: 99px;
+    border: 3px solid #0c1728;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a9823a;
+  }
+}
+
+@layer components {
+  /* ---- shared surface + accent language ---------------------------- */
+
+  /* Eyebrow label that sits above every section title. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-eyebrow;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply block h-px w-7 bg-current opacity-60;
+  }
+
+  /* Light card used on the cream sections. */
+  .card {
+    @apply relative rounded-2xl border border-navy-900/[0.07] bg-cream-100 shadow-card transition duration-500 ease-editorial;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:border-gold-500/40 hover:shadow-lift;
+  }
+
+  /* Dark card used on the navy sections. */
+  .card-dark {
+    @apply relative rounded-2xl border border-cream/[0.08] bg-white/[0.035] shadow-inset backdrop-blur-[2px] transition duration-500 ease-editorial;
+  }
+  .card-dark-hover {
+    @apply hover:-translate-y-1 hover:border-gold-500/40 hover:bg-white/[0.055];
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs tracking-wide;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition duration-300 ease-editorial;
+  }
+  .btn-gold {
+    @apply btn bg-gold-500 text-navy-950 hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-glow;
+  }
+  .btn-ghost-dark {
+    @apply btn border border-cream/25 text-cream hover:-translate-y-0.5 hover:border-gold-500 hover:text-gold-300;
+  }
+  .btn-ghost-light {
+    @apply btn border border-navy-900/20 text-navy-900 hover:-translate-y-0.5 hover:border-gold-600 hover:text-gold-700;
+  }
+
+  /* Gold foil text for the one or two words that carry a headline.
+     .foil has a near-white highlight, so it only works on the navy
+     panels; .foil-ink is the cream-panel version. */
+  .foil {
+    @apply bg-gold-sheen bg-clip-text text-transparent;
+  }
+  .foil-ink {
+    @apply bg-gold-sheen-ink bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  /* Faint ledger grid — quiet structure behind the dark panels. */
+  .bg-hairline {
+    background-image: linear-gradient(rgba(201, 162, 75, 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201, 162, 75, 0.5) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  /* Paper grain — keeps the large flat fills from looking like plastic. */
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* ---- scroll reveal ------------------------------------------------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- testimonial marquee ------------------------------------------- */
+
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 7%,
+    black 93%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 7%,
+    black 93%,
+    transparent
+  );
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 1.25rem;
+  padding: 0 0.625rem;
+}
+
+.marquee-track--left {
+  animation: marquee-left var(--marquee-speed, 68s) linear infinite;
+}
+
+.marquee-track--right {
+  animation: marquee-right var(--marquee-speed, 82s) linear infinite;
+}
+
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
