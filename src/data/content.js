@@ -126,7 +126,7 @@ export const experience = [
   {
     role: "Academic Director & Overall Executive",
     org: "Pine International Education Consultancy",
-    period: "",
+    period: "February 2024 – March 2025",
     points: [
       "Academic operations",
       "International educational services",
@@ -440,6 +440,7 @@ export const social = {
   instagramPersonal: "https://www.instagram.com/paharashish",
   instagramProfessional: "https://www.instagram.com/learnworldeducationpvt.ltd",
   tiktok: "https://www.tiktok.com/@august24p",
+  tiktokAlt: "https://www.tiktok.com/@learnworldedu?_r=1&_t=ZS-99kK2FfmTBw",
   website: "https://www.learnworldeducation.edu.np",
   whatsappPersonal: "9815117073",
   whatsappProfessional: "9840043869",

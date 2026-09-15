@@ -52,7 +52,7 @@ const channels = [
         label: "Learn World Education",
         href: social.instagramProfessional,
       },
-      { icon: LinkedinIcon, label: "LinkedIn (alt)", href: social.linkedinAlt },
+      { icon: TiktokIcon, label: "Tiktok Profile", href: social.tiktokAlt },
       {
         icon: MessageCircle,
         label: `WhatsApp ${social.whatsappProfessional}`,
